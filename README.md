@@ -1,3 +1,4 @@
+![downloads](https://img.shields.io/github/downloads/OBS-Akuma/smudgy-client/total)
 # Kirka Client Features
 
 ## Core Features
