@@ -2,9 +2,9 @@
   {
     "category": "general",
     "title": "Smudgy Extension",
-    "content": "Browser Extension BIG UPDATE!!! v0.0.5",
-    "img": "https://www.smudgy.store/uploads/icon.png",
-    "imgType": "icon",
+    "content": "added custom shortids, #GOLWIN > #SYSTEM v0.0.6",
+    "img": "https://private-user-images.githubusercontent.com/217508931/593483686-a24f1982-1879-4210-8630-38cb9a9a2e43.webp?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Nzg5MTk2OTMsIm5iZiI6MTc3ODkxOTM5MywicGF0aCI6Ii8yMTc1MDg5MzEvNTkzNDgzNjg2LWEyNGYxOTgyLTE4NzktNDIxMC04NjMwLTM4Y2I5YTlhMmU0My53ZWJwP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI2MDUxNiUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNjA1MTZUMDgxNjMzWiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9M2NlZmI3NzdlNjEyMDE1M2VkNmYyODkzNWJlZjE2NTBkNTczNWQwMWVmNzgzNWQ2N2VkZTEyODM2YjQ4ZGFlZiZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QmcmVzcG9uc2UtY29udGVudC10eXBlPWltYWdlJTJGd2VicCJ9.iFMl1NYPHxWmZbW-eS5iuXUh0S0ONwiDkfOv3ofn2J4",
+    "imgType": "banner",
     "link": "https://github.com/OBS-Akuma/Smudgy-Extension/blob/main/README.md#how-to-update",
     "updatedAt": 172800000,
     "live": true
