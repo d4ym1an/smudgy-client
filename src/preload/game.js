@@ -1172,7 +1172,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       sortFriendsList();
     };
 
-    // ─── Spectate Buttons ──────────────────────────────────────────────────────
+    // ─── Spectate Buttons credit: Dawn client (trust)
     const addSpectateButton = (div) => {
       if (div.nextElementSibling?.classList.contains("spectate-eye")) return;
 
