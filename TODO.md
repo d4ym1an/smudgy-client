@@ -2,7 +2,7 @@
 
 - Add clan tracking
 - Move all features from the extension to the client
-- ~~Add clan gradient~~ (Dawn Client has this feature — not adding because it's not truly needed, unlike other features such as clan tracking, which helps clan users know what they've done)
+- ~~Add clan gradient~~ (Dawn Client has this feature not adding because it's not truly needed, unlike other features such as clan tracking, which helps clan users know what they've done)
 - Add linking system
 - ~~Fix chat being too big (make setting)~~
 - Add clan lookup
