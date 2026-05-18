@@ -1,11 +1,20 @@
+# TODO / Features
+
 - Add clan tracking
-- move all of the features from the Extension to the cleint
+- Move all features from the extension to the client
 - Add clan gradient
-- add linking system
-- ~~Fix the chat being to big (make setting)~~
-- Add Clan look up
-- add Inv value
-- add KCH* inter like we did with Obsdidanclient. (scopes, css, textures)
-- Add Lobby badges
-- add sent Friend rq(s) ONLY WORKS / LOGS IF IN CLIENT
-- add a wanted poster badge to the id #WANTED
+- Add linking system
+- ~~Fix chat being too big (make setting)~~
+- Add clan lookup
+- Add inventory value
+- Add KCH* integration like we did with ObsidianClient (scopes, CSS, textures)
+- Add lobby badges
+- Add sent friend requests only works/logs if in client
+- Add wanted poster badge to the ID (#WANTED)
+- Add UI scaling
+- Add localStorage for usernames (usernames without pay)
+- add Custom client launcher
+- add ustom short IDs (this is in the extension)
+- add Compact inventory
+- add Quick account switcher
+- remove Forced Ui size
