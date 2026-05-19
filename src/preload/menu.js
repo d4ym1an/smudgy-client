@@ -24,6 +24,7 @@ class Menu {
       client: this.menu.querySelector("#client-options"),
       scripts: this.menu.querySelector("#scripts-options"),
       about: this.menu.querySelector("#about-client"),
+      assets: this.menu.querySelector("#assets-options"),
     };
   }
 
@@ -33,9 +34,9 @@ class Menu {
     menu.id = "juice-menu";
     menu.style.cssText =
       "z-index: 99999999; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);";
-	const menuCSS = document.createElement("style");
-	menuCSS.innerHTML = this.menuCSS
-	menu.prepend(menuCSS);
+    const menuCSS = document.createElement("style");
+    menuCSS.innerHTML = this.menuCSS;
+    menu.prepend(menuCSS);
     document.body.appendChild(menu);
     return menu;
   }
@@ -54,6 +55,7 @@ class Menu {
     this.handleDropdowns();
     this.handleSearch();
     this.handleButtons();
+    this.initAssets();
     this.localStorage.getItem("juice-menu-tab")
       ? this.handleTabChange(
           this.menu.querySelector(
@@ -116,6 +118,7 @@ class Menu {
     const inputs = this.menu.querySelectorAll("input[data-setting]");
     const textareas = this.menu.querySelectorAll("textarea[data-setting]");
     const selects = this.menu.querySelectorAll("select[data-setting]");
+
     inputs.forEach((input) => {
       const setting = input.dataset.setting;
       const type = input.type;
@@ -138,6 +141,20 @@ class Menu {
       const value = this.settings[setting];
       textarea.value = value;
     });
+
+    // Apply server zoom on init using saved setting, defaulting to 1
+    const serverZoom = this.settings["server_zoom"] ?? 1;
+    this.applyServerZoom(serverZoom);
+  }
+
+  applyServerZoom(value) {
+    let styleEl = document.getElementById("juice-server-zoom");
+    if (!styleEl) {
+      styleEl = document.createElement("style");
+      styleEl.id = "juice-server-zoom";
+      document.head.appendChild(styleEl);
+    }
+    styleEl.innerHTML = `.content .servers { zoom: ${value}; }`;
   }
 
   handleMenuKeybindChange() {
@@ -170,17 +187,26 @@ class Menu {
     const value = type === "checkbox" ? input.checked : input.value;
     this.settings[setting] = value;
     ipcRenderer.send("update-setting", setting, value);
+
     const event = new CustomEvent("juice-settings-changed", {
       detail: { setting: setting, value: value },
     });
     document.dispatchEvent(event);
+
+    // Live-update server zoom as the slider moves
+    if (setting === "server_zoom") {
+      this.applyServerZoom(value);
+    }
   }
 
   handleMenuInputChanges() {
     const inputs = this.menu.querySelectorAll("input[data-setting]");
     const textareas = this.menu.querySelectorAll("textarea[data-setting]");
+
     inputs.forEach((input) => {
-      input.addEventListener("change", () => this.handleMenuInputChange(input));
+      // Use "input" event for range sliders so it updates live while dragging
+      const eventType = input.type === "range" ? "input" : "change";
+      input.addEventListener(eventType, () => this.handleMenuInputChange(input));
     });
 
     textareas.forEach((textarea) => {
@@ -195,12 +221,15 @@ class Menu {
     const value = select.value;
     this.settings[setting] = value;
     ipcRenderer.send("update-setting", setting, value);
+
     const event = new CustomEvent("juice-settings-changed", {
       detail: { setting: setting, value: value },
     });
+
     if (setting === "menu_theme") {
       this.setTheme();
     }
+
     document.dispatchEvent(event);
   }
 
@@ -424,6 +453,150 @@ class Menu {
         this.initMenu();
       }
     });
+  }
+
+  initAssets() {
+    const TEXTURE_API = "https://raw.githubusercontent.com/imnotkoolkid/KCH/refs/heads/main/data/texture.json";
+    const CROSSHAIR_API = "https://raw.githubusercontent.com/imnotkoolkid/KCH/refs/heads/main/data/crosshair.json";
+    const TEXTURE_KEY = "SETTINGS___SETTING/BLOCKS___SETTING/TEXTURE_URL___SETTING";
+    const CROSSHAIR_KEY = "SETTINGS___SETTING/SNIPER___SETTING/SCOPE_URL___SETTING";
+
+    let textureData = [];
+    let crosshairData = [];
+    let currentType = "textures";
+    let loaded = false;
+
+    const getEls = () => ({
+      grid: this.menu.querySelector("#assets-grid"),
+      loading: this.menu.querySelector("#assets-loading"),
+      tabs: this.menu.querySelectorAll(".assets-tab"),
+    });
+
+    const renderGrid = (type) => {
+      const { grid } = getEls();
+      if (!grid) return;
+      grid.innerHTML = "";
+      const data = type === "textures" ? textureData : crosshairData;
+      const storageKey = type === "textures" ? TEXTURE_KEY : CROSSHAIR_KEY;
+
+      if (!data.length) {
+        grid.innerHTML = `<div class="assets-empty"><i class="fas fa-box-open"></i><span>No items found</span></div>`;
+        return;
+      }
+
+      data.forEach((item) => {
+        const imgSrc = type === "textures" ? item.textureImage : item.Crosshair;
+        if (!imgSrc) return;
+
+        const card = document.createElement("div");
+        card.className = "asset-card";
+        if (item.label === "featured") card.classList.add("featured");
+
+        card.innerHTML = `
+          <div class="asset-img-wrap">
+            <img src="${imgSrc}" alt="${item.id}" />
+            ${item.label === "featured" ? `<div class="asset-badge"><i class="fas fa-star"></i></div>` : ""}
+          </div>
+          <div class="asset-info">
+            <span class="asset-id">${item.id}</span>
+            <span class="asset-owner">${item.owner || "Unknown"}</span>
+            ${item.tags && item.tags.length ? `<div class="asset-tags">${item.tags.map(t => `<span class="asset-tag">${t}</span>`).join("")}</div>` : ""}
+          </div>
+          <button class="asset-apply juice-button">
+            <span class="text">Apply</span>
+            <div class="custom-border"></div>
+          </button>
+        `;
+
+        card.querySelector(".asset-apply").addEventListener("click", () => {
+          localStorage.setItem(storageKey, JSON.stringify(imgSrc));
+          const btn = card.querySelector(".asset-apply .text");
+          btn.innerText = "Applied!";
+          card.classList.add("applied");
+
+          // Show reload toast
+          const existing = this.menu.querySelector("#assets-reload-toast");
+          if (!existing) {
+            const toast = document.createElement("div");
+            toast.id = "assets-reload-toast";
+            toast.innerHTML = `
+              <i class="fas fa-rotate-right"></i>
+              <span>Reload the page for changes to apply</span>
+              <button class="toast-reload-btn">Reload</button>
+            `;
+            this.menu.querySelector("#assets-options").prepend(toast);
+            toast.querySelector(".toast-reload-btn").addEventListener("click", () => {
+              location.reload();
+            });
+          }
+
+          setTimeout(() => {
+            btn.innerText = "Apply";
+            card.classList.remove("applied");
+          }, 1500);
+        });
+
+        grid.appendChild(card);
+      });
+    };
+
+    const loadData = async () => {
+      const { grid, loading } = getEls();
+      if (!grid || !loading) return;
+
+      loading.style.display = "flex";
+      grid.style.display = "none";
+
+      try {
+        const [texRes, crossRes] = await Promise.all([
+          fetch(TEXTURE_API),
+          fetch(CROSSHAIR_API),
+        ]);
+        textureData = await texRes.json();
+        crosshairData = await crossRes.json();
+        console.log("[Assets] Loaded", textureData.length, "textures,", crosshairData.length, "crosshairs");
+      } catch (err) {
+        console.error("[Assets] Fetch error:", err);
+        loading.style.display = "none";
+        grid.style.display = "grid";
+        grid.innerHTML = `<div class="assets-empty"><i class="fas fa-triangle-exclamation"></i><span>Failed to load assets</span></div>`;
+        return;
+      }
+
+      loading.style.display = "none";
+      grid.style.display = "grid";
+      renderGrid(currentType);
+
+      // Sync the active sub-tab indicator to currentType
+      const { tabs } = getEls();
+      tabs.forEach(t => {
+        t.classList.toggle("active", t.dataset.assetsTab === currentType);
+      });
+    };
+
+    // Sub-tab switching (Textures / Crosshairs)
+    const assetsPanel = this.menu.querySelector("#assets-options");
+    if (assetsPanel) {
+      assetsPanel.addEventListener("click", (e) => {
+        const tab = e.target.closest(".assets-tab");
+        if (!tab) return;
+        assetsPanel.querySelectorAll(".assets-tab").forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+        currentType = tab.dataset.assetsTab;
+        renderGrid(currentType);
+      });
+    }
+
+    // Main tab click — load on first open
+    const mainTab = this.menu.querySelector(`[data-tab="assets"]`);
+    if (mainTab) {
+      mainTab.addEventListener("click", () => {
+        if (!loaded) {
+          loaded = true;
+          loadData();
+        }
+      });
+    }
   }
 
   createModal(title, description) {
