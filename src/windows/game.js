@@ -3,6 +3,7 @@ const { default_settings, allowed_urls } = require("../util/defaults.json");
 const { registerShortcuts } = require("../util/shortcuts");
 const { applySwitches } = require("../util/switches");
 const DiscordRPC = require("../addons/rpc");
+const { initGameFeatures } = require("./gamefeatures");
 const path = require("path");
 const Store = require("electron-store");
 const fs = require("fs");
@@ -155,6 +156,7 @@ const createWindow = () => {
   gameWindow.webContents.setUserAgent(
     `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.7103.116 Safari/537.36 Electron/10.4.7 JuiceClient/${app.getVersion()}`
   );
+  initGameFeatures(gameWindow);
   gameWindow.removeMenu();
   gameWindow.maximize();
 
