@@ -31,4 +31,7 @@
 
 https://github.com/user-attachments/assets/95d0e8fc-7a0b-4376-b9a7-7953a1aece96
 
+- add Banner(s) to users profiles (working on making so users can request for the background via the client, this is done bc like it might match the username and you can't see shit)
+
+- <img width="950" height="575" alt="Screenshot 2026-05-26 1 03 36 AM" src="https://github.com/user-attachments/assets/3d62f6d4-e0fb-48c2-947c-59fb683f43b2" />
 
