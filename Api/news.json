@@ -7,12 +7,12 @@
     "imgType": "icon",
     "link": "https://client.smudgy.store",
     "updatedAt": 172800000,
-    "live": true
+    "live": false
   },
   {
     "category": "MenuNews",
-    "title": "Kirka Discord is having a Badge event?",
-    "content": "looking for: VIP, CC (Content Creator), YOUTUBE, TWITCH, ARTIST, SKIN MAKER, MAP MAKER, TESTER, MODERATOR, SENIOR MODERATOR, VERIFIED, and DEVELOPER and We need 11 badges for all the 11 guns in the game, which visually should be able to highlight the gun clearly and We need 5 more elements showcasing stars (⭐)  from 1 to 5 stars which can be merged with every badge.",
+    "title": "Meow",
+    "content": "Super cool test",
     "img": "https://raw.githubusercontent.com/OBS-Akuma/KirkaBadges/refs/heads/main/Json/img/James_hex.webp",
     "imgType": "banner",
     "link": "https://discord.gg/QMBArEhGJ2",
