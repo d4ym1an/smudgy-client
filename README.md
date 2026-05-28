@@ -1,110 +1,71 @@
-![downloads](https://img.shields.io/github/downloads/OBS-Akuma/smudgy-client/total)
-# Kirka Client Features
+<h1 style="center">
+    <img src="https://www.smudgy.store/uploads/icon.png" style="height: 1em">
+    <span>Smudgy Client</span>
+</h1>
+<div align="center">
+  <a href="https://smudgy.store/">
+    <img src="https://img.shields.io/badge/Visit-Smudgy.store-green" />
+  </a>
+  <a href="/">
+    <img src="https://img.shields.io/github/downloads/OBS-Akuma/smudgy-client/total" />
+  </a>
+  <a>
+    <img src="https://img.shields.io/github/repo-size/OBS-Akuma/smudgy-client" />
+  </a>
+</div>
 
-## Core Features
+## Keybinds
 
-### Custom Script Loading
-- Automatically loads external JavaScript files from a designated scripts directory
-- Error handling for failed script loads
+| Key | Action |
+|------------|------------------------|
+| `Escape` | Exit Pointer Lock |
+| `rightshift` | Open client menu |
+| `F2` | Capture Screenshot to Clipboard |
+| `F4` | Reload to Base URL |
+| `F5` | Reload Page |
+| `F6` | Load URL from Clipboard |
+| `F7` | Copy Page URL to Clipboard |
+| `F11` | Toggle Fullscreen Mode |
+| `F12` | Toggle Developer Tools |
+| `Ctrl+Shift+I` | Toggle Developer Tools |
+| `Ctrl+Shift+C` | Toggle Developer Tools |
+| `Ctrl+Shift+J` | Toggle Developer Tools |
+| `Alt+F4` | Quit Application |
 
-### Client Menu and Keybinds
-- Configurable menu keybind with visual reminder in lobby
-- Dynamic keybind reminder updates when settings change
+## client Features
+* Client
+  * Adblocker
+  * FPS Uncap
+  * Import/Export Settings (client)
+  * Proxy Support
+  * Discord rpc
+* Customization
+   * Custom Keybinding
+   * One click CSS apply
+   * One click texture & scpoe apply
+   * Userscripts
+   * Userstyles
+   * Resource Swapper
+   * Custom profile Backgrounds
+   * custom Shortids (e.g., FURRIE, GLOWIN)
+* User Interface
+   * Friend Search
+   * Shift click to open user profile
+   * helpful links in About
 
-## Lobby Enhancements
+## To use the swapper:
+1. Make sure you enabled it in the menu modal settings section
+2. Get the file URL you want to swap and extract only the file name and extension
+3. Go to `%userprofile%/Documents/Juiceclient/swapper` and place the file there (yes it's still named `Juiceclient`)
+4. Reload the client to apply changes
 
-### Lobby News System
-- Displays customizable news cards (general, promotional, event, alert categories)
-- Includes images, badges (NEW/LIVE), and clickable links
-- Fetches news data from remote repository
+## Credits
+[Juice Client](https://github.com/irrvlo/juice-client) ([irrvlo](https://irrvlo.xyz/)), for Making the bace of the client
 
-### Custom Discord Button
-- Replaces social button with a branded Discord invite button
+[Daymian](https://daymian.xyz/) for additional features
 
-### Keybind Reminder
-- Shows current menu keybind at bottom of lobby
+[Obsidian Client](https://github.com/imnotkoolkid/OBSIDIAN-CLIENT-preview) ([imnotkoolkid](https://github.com/imnotkoolkid)) for additional features
 
-## UI Customization Features
+[Redline Client] ([robertpakalns](https://github.com/robertpakalns)) for this readme format
 
-### Display Options
-- Persistent crosshair: Option to keep crosshair always visible
-- Permanent tablist: Always-visible scoreboard with team labels (RED/BLUE)
-- Hide chat completely
-- Hide kill text
-- Hide entire interface
-
-### Visual Effects
-- Adjust interface opacity
-- Scale interface bounds (0.8x, 0.9x, 1x)
-- Skip loading screens
-- Custom hitmarkers: Replace default hitmarker with custom image
-- Custom kill icons: Replace kill icons with custom images
-- Rave mode: Animated hue rotation effect
-- Disable UI animations: Remove all transitions and animations
-
-## Player Customization System
-
-### Name Styling
-- Gradient names with rotation angles and color stops
-- Optional animated gradient effects
-
-### Badge System
-- Discord linked badge
-- Booster badge
-- Custom badge images (supports local file paths or URLs)
-
-## In-Game Features
-
-### Statistics
-- Real-time kill/death ratio display
-
-### Interface Controls
-- Toggle spectate button visibility
-- Apply customizations to tab and ESC menu player lists
-
-## Profile Page Enhancements
-- Displays player customizations (gradient names, badges) on profile pages
-- Shows Discord linked and booster badges
-
-## Servers Page Features
-
-### Map Display
-- Replaces server list backgrounds with custom map images
-- Fetches map images from remote repository
-
-### Navigation
-- Shift-click usernames to navigate to profiles
-
-## Friends List Features
-
-### Management
-- Search and filter friends by username or ID
-- Deny all friend requests with confirmation
-- Shift-click friend status to copy game link to clipboard
-
-### Display
-- Applies badge and gradient customizations to friend list
-
-## Theme System
-
-### Styling Options
-- External CSS support: Load custom CSS from URLs
-- Custom CSS editor for advanced styling
-- Dynamic theme updates without page reload
-
-## Notification System
-- Custom styled notifications for client events
-- IPC-based notification handling
-
-## Settings Synchronization
-- Listens for settings change events
-- Real-time UI updates based on setting changes
-- Persistent settings via IPC
-
-## Element Observation
-- DOM mutation monitoring utility
-- Dynamic content loading detection
-
-## Console Management
-- Preserves original console methods
-- Resets console on URL changes
+[Xip](https://kirka.io/) for sexy [kirka](https://kirka.io/)
