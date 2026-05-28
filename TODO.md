@@ -1,4 +1,4 @@
-# TODO / Features i know dawn client WILL take ;3*
+# TODO
 
 - Add clan tracking
 - Move all features from the extension to the client
@@ -13,7 +13,7 @@
 - Add wanted poster badge to the ID (#WANTED)
 - ~~Add UI scaling~~
 - Add localStorage for usernames (usernames without pay)
-- Add custom client launcher (here you go Dawn, have a fun time: https://obs-akuma.github.io/smudgy-launcher/launcher.html)
+- Add custom client launcher (https://obs-akuma.github.io/smudgy-launcher/launcher.html)
 - ~~Add custom short IDs (this is in the extension)~~
 - Add compact inventory
 - Add quick account switcher
