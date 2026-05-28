@@ -43,7 +43,14 @@
       height: 100%;
       border: 0.25rem solid rgb(255, 255, 255, 0.25);
       border-radius: 1.5rem;
-      box-sizing: border-box;
+      box-sizing: pointer-events: none;
+    }
+
+    .dyk-text {
+      font-size: 0.9rem;
+      margin-top: 10px;
+      max-width: 100%;
+      word-wrap: break-word;
     }
   </style>
 </head>
@@ -59,6 +66,7 @@
     const statusDiv = document.querySelector('.status');
     const verDiv = document.querySelector('.ver');
     
+    // Setup layout
     splash.style.display = 'flex';
     splash.style.flexDirection = 'column';
     splash.style.justifyContent = 'space-between';
@@ -67,15 +75,45 @@
     
     verDiv.style.alignSelf = 'flex-end';
     
+    // Create container for DYK text
+    const dykContainer = document.createElement('div');
+    dykContainer.className = 'dyk-text';
+    dykContainer.textContent = 'Loading fact...';
+    splash.appendChild(dykContainer);
+    
+    // Fetch the API data
     fetch('https://raw.githubusercontent.com/OBS-Akuma/smudgy-client/refs/heads/main/Api/dyk.json')
-      .then(res => res.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        return response.json();
+      })
       .then(data => {
-        const facts = Object.values(data[0]);
-        const randomFact = facts[Math.floor(Math.random() * facts.length)];
-        const dykDiv = document.createElement('div');
-        dykDiv.textContent = randomFact;
-        dykDiv.style.fontSize = '1rem';
-        splash.appendChild(dykDiv);
+        console.log('API Data:', data);
+        
+        // Handle the data structure
+        let facts = [];
+        
+        if (Array.isArray(data) && data.length > 0) {
+          // Get all values from the first object
+          facts = Object.values(data[0]);
+        } else if (typeof data === 'object' && data !== null) {
+          // If it's a single object
+          facts = Object.values(data);
+        }
+        
+        if (facts.length > 0) {
+          const randomFact = facts[Math.floor(Math.random() * facts.length)];
+          dykContainer.textContent = randomFact;
+        } else {
+          dykContainer.textContent = 'No facts available';
+        }
+      })
+      .catch(error => {
+        console.error('Fetch error:', error);
+        dykContainer.textContent = 'Failed to load fact. Check console.';
+        dykContainer.style.color = '#ffaaaa';
       });
   </script>
 </body>
