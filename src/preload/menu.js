@@ -126,6 +126,7 @@ class Menu {
       endgame_message_enabled: false,
       endgame_message_text: "Good Game",
       simple_invite_btns: false,
+      always_show_ingame_menu: false,
     };
 
     inputs.forEach((input) => {
@@ -161,6 +162,10 @@ class Menu {
     if (this.settings["simple_invite_btns"]) {
       this.injectSimpleInviteBtns();
     }
+
+    if (this.settings["always_show_ingame_menu"]) {
+      this.injectAlwaysShowIngameMenu();
+    }
   }
 
   applyServerZoom(value) {
@@ -172,6 +177,24 @@ class Menu {
     }
     styleEl.innerHTML = `.content .servers { zoom: ${value}; }`;
   }
+
+  // ── Always Show In-Game Menu ──────────────────────────────────────────────
+
+  injectAlwaysShowIngameMenu() {
+    if (document.getElementById("juice-always-show-ingame-menu")) return;
+    const link = document.createElement("link");
+    link.id = "juice-always-show-ingame-menu";
+    link.rel = "stylesheet";
+    link.href = "https://irrvlo.xyz/aosb.css";
+    document.head.appendChild(link);
+  }
+
+  removeAlwaysShowIngameMenu() {
+    const el = document.getElementById("juice-always-show-ingame-menu");
+    if (el) el.remove();
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
 
   handleMenuKeybindChange() {
     const changeKeybindButton = this.menu.querySelector(".change-keybind");
@@ -227,6 +250,14 @@ class Menu {
       } else {
         const existing = document.getElementById("juice-endgame-script");
         if (existing) existing.remove();
+      }
+    }
+
+    if (setting === "always_show_ingame_menu") {
+      if (value) {
+        this.injectAlwaysShowIngameMenu();
+      } else {
+        this.removeAlwaysShowIngameMenu();
       }
     }
   }
@@ -601,6 +632,31 @@ class Menu {
         const TARGET_TIME = "0:01";
         const MESSAGE_TEXT = ${JSON.stringify(messageText)};
         let hasSentMessage = false;
+        let lastTimerValue = null;
+        let timerWasAbsent = false;
+
+        function parseTimerSeconds(str) {
+          if (!str) return -1;
+          const parts = str.trim().split(':');
+          if (parts.length !== 2) return -1;
+          return parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+        }
+
+        function sendMessage() {
+          const chatInput = document.querySelector('#WwMnw');
+          if (chatInput) {
+            chatInput.value = MESSAGE_TEXT;
+            chatInput.dispatchEvent(new Event('input', { bubbles: true }));
+            const enterButton = document.querySelector('.info-key-cont.enter');
+            if (enterButton) {
+              enterButton.click();
+            } else {
+              chatInput.dispatchEvent(new KeyboardEvent('keypress', {
+                key: 'Enter', code: 'Enter', keyCode: 13, which: 13, bubbles: true
+              }));
+            }
+          }
+        }
 
         function monitorTimersAndSendMessage() {
           if (hasSentMessage) return;
@@ -609,19 +665,7 @@ class Menu {
           timers.forEach(timer => {
             if (timer.textContent.trim() === TARGET_TIME && !hasSentMessage) {
               hasSentMessage = true;
-              const chatInput = document.querySelector('#WwMnw');
-              if (chatInput) {
-                chatInput.value = MESSAGE_TEXT;
-                chatInput.dispatchEvent(new Event('input', { bubbles: true }));
-                const enterButton = document.querySelector('.info-key-cont.enter');
-                if (enterButton) {
-                  enterButton.click();
-                } else {
-                  chatInput.dispatchEvent(new KeyboardEvent('keypress', {
-                    key: 'Enter', code: 'Enter', keyCode: 13, which: 13, bubbles: true
-                  }));
-                }
-              }
+              sendMessage();
             }
           });
         }
@@ -661,18 +705,38 @@ class Menu {
           }
         }
 
-        let lastTimerValue = null;
+        // Main polling loop — also handles reset detection
         setInterval(() => {
-          if (!hasSentMessage) {
-            const timers = document.querySelectorAll('.timer.bg.text-1');
-            timers.forEach(timer => {
-              const currentValue = timer.textContent.trim();
-              if (currentValue === TARGET_TIME && lastTimerValue !== TARGET_TIME) {
-                monitorTimersAndSendMessage();
-              }
-              lastTimerValue = currentValue;
-            });
+          const timers = document.querySelectorAll('.timer.bg.text-1');
+
+          if (timers.length === 0) {
+            // Timer is gone (back in lobby / between games) — mark it so we
+            // know to reset once a new timer appears
+            timerWasAbsent = true;
+            lastTimerValue = null;
+            return;
           }
+
+          const currentValue = timers[0].textContent.trim();
+          const currentSeconds = parseTimerSeconds(currentValue);
+
+          // Reset when: timer was absent and came back, OR the timer jumped
+          // upward (new game started with a fresh countdown)
+          const lastSeconds = parseTimerSeconds(lastTimerValue);
+          const timerJumpedUp = lastSeconds !== -1 && currentSeconds > lastSeconds + 5;
+
+          if (timerWasAbsent || timerJumpedUp) {
+            hasSentMessage = false;
+            timerWasAbsent = false;
+          }
+
+          if (!hasSentMessage) {
+            if (currentValue === TARGET_TIME && lastTimerValue !== TARGET_TIME) {
+              monitorTimersAndSendMessage();
+            }
+          }
+
+          lastTimerValue = currentValue;
         }, 100);
 
         setupTimerWatcher();
