@@ -10,7 +10,7 @@
 - ~~Add KCH* integration like **we** did with ObsidianClient (scopes, CSS, textures)~~
 - Add lobby badges
 - Add sent friend requests, only works/logs if in client
-- Add wanted poster badge to the ID (#WANTED)
+- ~~Add wanted poster badge to the ID (#WANTED)~~
 - ~~Add UI scaling~~
 - Add localStorage for usernames (usernames without pay)
 - Add custom client launcher (https://obs-akuma.github.io/smudgy-launcher/launcher.html)
