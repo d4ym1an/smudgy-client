@@ -59,6 +59,21 @@
 3. Go to `%userprofile%/Documents/Juiceclient/swapper` and place the file there (yes it's still named `Juiceclient`)
 4. Reload the client to apply changes
 
+## Client vs Client
+![smudgy](https://img.shields.io/github/repo-size/OBS-Akuma/smudgy-client) -(smudgy) vs (dawn)- ![DawnClient](https://img.shields.io/github/repo-size/zVipexx/dawn-client)
+
+![smudgy](https://img.shields.io/github/repo-size/OBS-Akuma/smudgy-client) -(smudgy) vs (redline)- ![redline](https://img.shields.io/github/repo-size/robertpakalns/redline-client)
+
+![smudgy](https://img.shields.io/github/repo-size/OBS-Akuma/smudgy-client) -(smudgy) vs (Juice)- ![JuiceClient](https://img.shields.io/github/repo-size/irrvlo/juice-client)
+
+![smudgy](https://img.shields.io/github/repo-size/OBS-Akuma/smudgy-client) -(smudgy) vs (Obsidian)- ![ObsidianClient](https://img.shields.io/github/repo-size/imnotkoolkid/OBSIDIAN-CLIENT-preview)
+
+![smudgy](https://img.shields.io/github/repo-size/OBS-Akuma/smudgy-client) -(smudgy) vs (Nameless)- ![NamelessClient](https://img.shields.io/github/repo-size/imnotkoolkid/nameless-client-r)
+
+![smudgy](https://img.shields.io/github/repo-size/OBS-Akuma/smudgy-client) -(smudgy) vs (CokeClient)- ![CokeClient](https://img.shields.io/github/repo-size/42infi/juice-client)
+
+![smudgy](https://img.shields.io/github/repo-size/OBS-Akuma/smudgy-client) -(smudgy) vs (publikc)- ![publikc](https://img.shields.io/github/repo-size/skywalk1411/publikc)
+
 ## Credits
 [Juice Client](https://github.com/irrvlo/juice-client) ([irrvlo](https://irrvlo.xyz/)), for Making the bace of the client
 
