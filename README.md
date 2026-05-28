@@ -66,6 +66,6 @@
 
 [Obsidian Client](https://github.com/imnotkoolkid/OBSIDIAN-CLIENT-preview) ([imnotkoolkid](https://github.com/imnotkoolkid)) for additional features
 
-[Redline Client] ([robertpakalns](https://github.com/robertpakalns)) for this readme format
+[Redline Client](https://github.com/robertpakalns/redline-client/) ([robertpakalns](https://github.com/robertpakalns)) for this readme format
 
 [Xip](https://kirka.io/) for sexy [kirka](https://kirka.io/)
